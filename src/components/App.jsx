@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IssueForm from './IssueForm.jsx';
+import IssueForm from './IssueForm';
 import './App.scss';
 
 
