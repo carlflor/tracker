@@ -8,7 +8,7 @@ class IssueForm extends Component {
       title: '',
       type: '',
       description: '',
-    }
+    };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -28,7 +28,7 @@ class IssueForm extends Component {
     console.log(this.state);
   }
 
-  issueTypeOptions() {
+  _renderIssueTypeOptions() {
     return this.props.types.map((value) => (
       <option key={value} value={value}>{value}</option>
     ));
@@ -46,7 +46,7 @@ class IssueForm extends Component {
         <label className="field">
           Type
           <select name="type" value={this.state.type} {...onChange}>
-            {this.issueTypeOptions()}
+            {this._renderIssueTypeOptions()}
           </select>
         </label>
         <label className="field">

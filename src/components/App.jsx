@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import IssueForm from './IssueForm';
+import IssueList from './IssueList';
 import './App.scss';
 
 
@@ -10,8 +11,7 @@ class App extends Component {
         <div className="main">
           <div className="issue-chart">
           </div>
-          <div className="issue-list">
-          </div>
+          <IssueList />
         </div>
         <div className="sidebar">
           <IssueForm />

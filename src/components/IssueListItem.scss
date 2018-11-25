@@ -1,0 +1,33 @@
+@import '../theme.scss';
+
+.list-item {
+  box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, .05);
+  padding: $content-spacing / 2;
+  margin-bottom: $content-spacing / 2;
+  border-radius: 5px;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  > .type {
+    padding: 5px 10px;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    background: gray;
+    font-size: .75em;
+
+    &.-label-bug {
+      background: red;
+    }
+
+    &.-label-question {
+      background: purple;
+    }
+
+    &.-label-improvement {
+      background: orange;
+    }
+  }
+}

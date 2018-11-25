@@ -1,0 +1,13 @@
+@import '../theme.scss';
+
+.issue-list {
+  padding: $content-spacing;
+
+  > .body {
+    margin-top: 50px;
+
+    &.-closed {
+      color: lighten($font-black, 30%);
+    }
+  }
+}
