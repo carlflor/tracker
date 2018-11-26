@@ -3,6 +3,7 @@ import IssueForm from './IssueForm';
 import IssueList from './IssueList';
 import './App.scss';
 
+import { withAppContext } from '../context.js';
 
 class App extends Component {
   render() {
@@ -11,14 +12,14 @@ class App extends Component {
         <div className="main">
           <div className="issue-chart">
           </div>
-          <IssueList />
+          <IssueList issues={this.props.issues} />
         </div>
         <div className="sidebar">
-          <IssueForm />
+          <IssueForm addIssue={this.props.addIssue} />
         </div>
       </div>
     );
   }
 }
 
-export default App;
+export default withAppContext(App);

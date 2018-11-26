@@ -4,10 +4,13 @@ import './IssueList.scss';
 import IssueListItem from './IssueListItem.jsx';
 
 class IssueList extends Component {
-  _renderList() {
-    return this.props.open.map(issue => (
+
+  _renderIssues(isOpen) {
+    const openIssues = this.props.issues.filter( issue => issue.active === isOpen );
+    return openIssues.map(issue  => (
       <IssueListItem
         key={issue.id}
+        id={issue.id}
         title={issue.title}
         type={issue.type}
         description={issue.description}
@@ -21,11 +24,11 @@ class IssueList extends Component {
       <div className="issue-list">
         <div className="body">
           <h2>Open Issues</h2>
-          {this._renderList()}
+          {this._renderIssues(true)}
         </div>
         <div className="body -closed">
           <h2>Closed Issues</h2>
-          {this._renderList()}
+          {this._renderIssues(false)}
         </div>
       </div>
     )
@@ -33,24 +36,7 @@ class IssueList extends Component {
 }
 
 IssueList.defaultProps = {
-  open: [
-    {id: 1,  title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 2, title: 'test', type: 'Improvement', description: 'test', active: true},
-    {id: 3, title: 'test', type: 'Question', description: 'test', active: true},
-    {id: 4, title: 'test', type: 'Question', description: 'test', active: true},
-    {id: 5, title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 6, title: 'test', type: 'Improvement', description: 'test', active: true},
-    {id: 7, title: 'test', type: 'Bug', description: 'test', active: true},
-  ],
-  closed: [
-    {id: 1,  title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 2, title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 3, title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 4, title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 5, title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 6, title: 'test', type: 'Bug', description: 'test', active: true},
-    {id: 7, title: 'test', type: 'Bug', description: 'test', active: true},
-  ],
+  issues: []
 }
 
 export default IssueList;

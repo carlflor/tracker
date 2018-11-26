@@ -6,7 +6,10 @@ class IssueListItem extends Component {
     const typeClass = `type -label-${this.props.type.toLowerCase()}`
     return (
       <div className="list-item">
-        <span className="title">{this.props.title}</span>
+        <div className="info">
+          <span className="id">{this.props.id}</span>
+          <span className="title">{this.props.title}</span>
+        </div>
         <span className={typeClass}>{this.props.type}</span>
       </div>
     );

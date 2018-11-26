@@ -26,6 +26,7 @@ class IssueForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(this.state);
+    this.props.addIssue(this.state);
   }
 
   _renderIssueTypeOptions() {

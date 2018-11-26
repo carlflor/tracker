@@ -10,6 +10,11 @@
   align-items: center;
   justify-content: space-between;
 
+  > .info > .id {
+    font-weight: bold;
+    margin-right: $content-spacing;
+  }
+
   > .type {
     padding: 5px 10px;
     color: white;
