@@ -15,7 +15,7 @@ class App extends Component {
           <IssueList issues={this.props.issues} />
         </div>
         <div className="sidebar">
-          <IssueForm addIssue={this.props.addIssue} />
+          <IssueForm {...this.props} />
         </div>
       </div>
     );

@@ -4,7 +4,6 @@ import './IssueList.scss';
 import IssueListItem from './IssueListItem.jsx';
 
 class IssueList extends Component {
-
   _renderIssues(isOpen) {
     const openIssues = this.props.issues.filter( issue => issue.active === isOpen );
     return openIssues.map(issue  => (

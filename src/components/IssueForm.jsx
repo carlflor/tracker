@@ -6,7 +6,7 @@ class IssueForm extends Component {
     super(props);
     this.state = {
       title: '',
-      type: '',
+      type: 'Bug',
       description: '',
     };
 
@@ -25,8 +25,15 @@ class IssueForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state);
-    this.props.addIssue(this.state);
+
+    const id = this.props.currentIssue;
+    const issue = { id, ...this.state }
+
+    if (id === 0) {
+      this.props.addIssue(issue);
+    } else {
+      this.props.editIssue(issue);
+    }
   }
 
   _renderIssueTypeOptions() {

@@ -1,7 +1,7 @@
 import React, { Component, createContext } from 'react';
 
 const initialState = {
-  form: 'new',
+  currentIssue: 0,
   idCounter: 7,
   issues: [
     {id: 1,  title: 'test', type: 'Bug', description: 'test', active: true},
@@ -24,6 +24,8 @@ export class AppProvider extends Component {
     };
 
     this.addIssue = this.addIssue.bind(this);
+    this.editIssue = this.editIssue.bind(this);
+    this.setCurrentIssue = this.setCurrentIssue.bind(this);
   }
 
   addIssue(data) {
@@ -39,11 +41,34 @@ export class AppProvider extends Component {
     }))
   }
 
+  editIssue(data) {
+    const { id, title, type, description } = data;
+    if (id === null) return;
+    const edit = {title, type, description};
+
+    this.setState( prevState => {
+      const issues = prevState.issues.map(issue => {
+        return issue.id === id ?
+          {...issue, ...edit}  :
+          {...issue};
+      });
+
+      return {issues}
+    });
+  }
+
+  setCurrentIssue(data) {
+    const {id} = data;
+    this.setState({currentIssue: id});
+  }
+
   render() {
     const value = {
       ...this.state,
-      addIssue: this.addIssue
-    }
+      addIssue: this.addIssue,
+      editIssue: this.editIssue,
+      setCurrentIssue: this.setCurrentIssue,
+    };
 
     return (
       <Provider value={value}>
@@ -56,21 +81,8 @@ export class AppProvider extends Component {
 
 export function withAppContext(Component) {
   return function WrapperComponent(props) {
-
-    const child = state => (
-      <Component
-        {...props}
-        form={state.form}
-        issues={state.issues}
-        addIssue={state.addIssue}
-      />
-    );
-
-    return (
-      <Consumer>
-        {child}
-      </Consumer>
-    );
+    const child = state => <Component {...props} {...state} />;
+    return <Consumer>{child}</Consumer>;
   }
 }
 
