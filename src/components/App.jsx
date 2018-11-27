@@ -4,6 +4,7 @@ import IssueList from './IssueList';
 import './App.scss';
 
 import { withAppContext } from '../context.js';
+import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   render() {
@@ -15,7 +16,14 @@ class App extends Component {
           <IssueList issues={this.props.issues} />
         </div>
         <div className="sidebar">
-          <IssueForm {...this.props} />
+          <Switch>
+            <Route
+              exact
+              path="/issues/:id/edit"
+              render={(props) => <IssueForm {...this.props} match={props.match} />}
+            />
+            <Route render={() => <IssueForm {...this.props} />} />
+          </Switch>
         </div>
       </div>
     );

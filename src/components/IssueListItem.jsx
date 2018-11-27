@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import './IssueListItem.scss';
 import Ionicon from 'react-ionicons'
 
-class IssueListItem extends Component {
+import { Link } from 'react-router-dom';
+
+class IssueListItem extends PureComponent {
   render() {
     const typeClass = `type -label-${this.props.type.toLowerCase()}`
     return (
@@ -14,7 +16,9 @@ class IssueListItem extends Component {
           </div>
           <div className="actions">
             <span className={typeClass}>{this.props.type}</span>
-            <span className="create"><Ionicon icon="md-create" /></span>
+            <Link className="edit" to={`/issues/${this.props.id}/edit`}>
+              <Ionicon icon="md-create" />
+            </Link>
           </div>
         </div>
       </div>

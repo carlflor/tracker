@@ -1,7 +1,6 @@
 import React, { Component, createContext } from 'react';
 
 const initialState = {
-  currentIssue: 0,
   idCounter: 7,
   issues: [
     {id: 1,  title: 'test', type: 'Bug', description: 'test', active: true},
@@ -25,7 +24,6 @@ export class AppProvider extends Component {
 
     this.addIssue = this.addIssue.bind(this);
     this.editIssue = this.editIssue.bind(this);
-    this.setCurrentIssue = this.setCurrentIssue.bind(this);
   }
 
   addIssue(data) {
@@ -49,17 +47,12 @@ export class AppProvider extends Component {
     this.setState( prevState => {
       const issues = prevState.issues.map(issue => {
         return issue.id === id ?
-          {...issue, ...edit}  :
+          {...issue, ...edit} :
           {...issue};
       });
 
-      return {issues}
+      return {issues};
     });
-  }
-
-  setCurrentIssue(data) {
-    const {id} = data;
-    this.setState({currentIssue: id});
   }
 
   render() {
@@ -67,7 +60,6 @@ export class AppProvider extends Component {
       ...this.state,
       addIssue: this.addIssue,
       editIssue: this.editIssue,
-      setCurrentIssue: this.setCurrentIssue,
     };
 
     return (
@@ -85,4 +77,3 @@ export function withAppContext(Component) {
     return <Consumer>{child}</Consumer>;
   }
 }
-
