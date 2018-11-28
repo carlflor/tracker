@@ -4,6 +4,7 @@ import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { withAppContext } from '../context.js';
 import flow from 'lodash/flow';
+import IssueChart from './IssueChart';
 import IssueForm from './IssueForm';
 import IssueList from './IssueList';
 import './App.scss';
@@ -16,8 +17,6 @@ class App extends Component {
     return (
       <div>
         <div className="main">
-          <div className="issue-chart">
-          </div>
           <IssueList { ...listProps } order={open} status={'open'} />
           <IssueList { ...listProps } order={closed} status={'closed'}/>
         </div>
@@ -30,6 +29,9 @@ class App extends Component {
             />
             <Route render={() => <IssueForm {...this.props} />} />
           </Switch>
+        </div>
+        <div className="issue-chart">
+          <IssueChart issues={issues} open={open} />
         </div>
       </div>
     );

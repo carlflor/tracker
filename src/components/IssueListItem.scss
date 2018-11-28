@@ -39,15 +39,15 @@
     font-size: .75em;
 
     &.-label-bug {
-      background: red;
+      background: $label-bug;
     }
 
     &.-label-question {
-      background: purple;
+      background: $label-question;
     }
 
     &.-label-improvement {
-      background: orange;
+      background: $label-improvement;
     }
   }
 
