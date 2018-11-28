@@ -4,7 +4,17 @@ import IssueListItem from './IssueListItem.jsx';
 import './IssueList.scss';
 
 const listTarget = {
-  drop(props, monitor, component) {
+  hover(props, monitor, component) {
+    const { status, order } = props
+
+    if ((status !== monitor.getItem().status) &&
+       (order.length === 0)) {
+
+      props.moveIssue(monitor.getItem(), { status, index: 0 });
+
+      monitor.getItem().index = 0;
+      monitor.getItem().status = status;
+    }
   }
 }
 
@@ -18,7 +28,7 @@ class IssueList extends Component {
   _renderIssues() {
     const issues = this.props.order.map( id => (
       this.props.issues[String(id)]
-    ))
+    ));
 
     return issues.map((issue, index)  => (
       <IssueListItem
@@ -34,11 +44,9 @@ class IssueList extends Component {
   }
 
   render() {
-    //const { connectDropTarget, status } = this.props;
-    const { status } = this.props;
+    const { connectDropTarget, status } = this.props;
 
-    //return connectDropTarget(
-    return (
+    return connectDropTarget(
       <div className="issue-list">
         <div className={status}>
           <h2>{`${status} Issues`}</h2>
@@ -52,7 +60,6 @@ class IssueList extends Component {
 IssueList.defaultProps = {
   issues: [],
   order: [],
-}
+};
 
-//export default DropTarget("ISSUE", listTarget, collect)(IssueList);
-export default IssueList;
+export default DropTarget("ISSUE", listTarget, collect)(IssueList);

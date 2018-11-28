@@ -12,7 +12,7 @@ const initialState = {
     '5': {id: 5, title: 'test', type: 'Bug', description: 'test', status: 'closed'},
     '6': {id: 6, title: 'test', type: 'Improvement', description: 'test', status: 'open'},
     '7': {id: 7, title: 'test', type: 'Bug', description: 'test', status: 'open'},
-  }
+  },
 };
 
 const { Provider, Consumer } = createContext();
@@ -56,13 +56,35 @@ export class AppProvider extends Component {
     }));
   }
 
-  moveIssue(fromPos, toPos) {
-    const open = [...this.state.open];
-    const closed = [...this.state.closed];
+  moveIssue(pos, newPos) {
+    const { id, title, type, description, status, index } = pos;
+    const newStatus = newPos.status;
+    const newIndex = newPos.index;
 
-    const { status, index } = toPos
-    const order = this.state[status];
-    console.log(order);
+    const issue = { id, title, type, description, status: newStatus };
+
+    this.setState( prevState => {
+      const order = [...prevState[status]];
+      order.splice(index, 1);
+
+      const newState = {
+        [status]: order,
+        issues: {
+          ...prevState.issues,
+          [String(id)]: issue,
+        }
+      };
+
+      if (status === newStatus) {
+        order.splice(newIndex, 0, id);
+      } else {
+        const newOrder = [...prevState[newStatus]];
+        newOrder.splice(newIndex, 0, id);
+        newState[newStatus] = newOrder;
+      }
+
+      return newState;
+    });
   }
 
   render() {

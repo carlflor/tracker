@@ -10,15 +10,16 @@ import './App.scss';
 
 class App extends Component {
   render() {
-    const { issues, open, closed } = this.props;
+    const { issues, open, closed, moveIssue } = this.props;
+    const listProps = { issues, moveIssue };
 
     return (
       <div>
         <div className="main">
           <div className="issue-chart">
           </div>
-          <IssueList issues={issues} order={open} status={'open'} />
-          <IssueList issues={issues} order={closed} status={'closed'}/>
+          <IssueList { ...listProps } order={open} status={'open'} />
+          <IssueList { ...listProps } order={closed} status={'closed'}/>
         </div>
         <div className="sidebar">
           <Switch>
