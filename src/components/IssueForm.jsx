@@ -29,7 +29,7 @@ class IssueForm extends Component {
   }
 
   getIssue(issues, id) {
-    return issues.find((issue) => issue.id === id);
+    return issues[String(id)];
   }
 
   handleChange(event) {

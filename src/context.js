@@ -4,15 +4,15 @@ const initialState = {
   idCounter: 7,
   open: [1,3,6,7],
   closed: [2,4,5],
-  issues: [
-    {id: 1,  title: 'test', type: 'Bug', description: 'test', state: 'open'},
-    {id: 2, title: 'test', type: 'Improvement', description: 'test', state: 'closed'},
-    {id: 3, title: 'test', type: 'Question', description: 'test', state: 'open'},
-    {id: 4, title: 'test', type: 'Question', description: 'test', state: 'closed'},
-    {id: 5, title: 'test', type: 'Bug', description: 'test', state: 'closed'},
-    {id: 6, title: 'test', type: 'Improvement', description: 'test', state: 'open'},
-    {id: 7, title: 'test', type: 'Bug', description: 'test', state: 'open'},
-  ]
+  issues: {
+    '1': {id: 1,  title: 'test', type: 'Bug', description: 'test', status: 'open'},
+    '2': {id: 2, title: 'test', type: 'Improvement', description: 'test', status: 'closed'},
+    '3': {id: 3, title: 'test', type: 'Question', description: 'test', status: 'open'},
+    '4': {id: 4, title: 'test', type: 'Question', description: 'test', status: 'closed'},
+    '5': {id: 5, title: 'test', type: 'Bug', description: 'test', status: 'closed'},
+    '6': {id: 6, title: 'test', type: 'Improvement', description: 'test', status: 'open'},
+    '7': {id: 7, title: 'test', type: 'Bug', description: 'test', status: 'open'},
+  }
 };
 
 const { Provider, Consumer } = createContext();
@@ -35,32 +35,34 @@ export class AppProvider extends Component {
 
     this.setState( prevState => ({
       idCounter: id,
-      issues: [
+      open: [...prevState.open, id],
+      issues: {
         ...prevState.issues,
-        { id, title, type, description, state: 'active' }
-      ]
-    }))
+        [String(id)]: { id, title, type, description, status: 'open' }
+      }
+    }));
   }
 
   editIssue(data) {
-    const { id, title, type, description } = data;
+    const { id, title, type, description, status } = data;
     if (id === null) return;
-    const edit = {title, type, description};
+    const edit = {id, title, type, description, status};
 
-    this.setState( prevState => {
-      const issues = prevState.issues.map(issue => {
-        return issue.id === id ?
-          {...issue, ...edit} :
-          {...issue};
-      });
-
-      return {issues};
-    });
+    this.setState( prevState => ({
+      issues: {
+        ...prevState.issues,
+        [String(id)]: edit
+      }
+    }));
   }
 
   moveIssue(fromPos, toPos) {
-    const toState = toPos.state
-    console.log(toState);
+    const open = [...this.state.open];
+    const closed = [...this.state.closed];
+
+    const { status, index } = toPos
+    const order = this.state[status];
+    console.log(order);
   }
 
   render() {

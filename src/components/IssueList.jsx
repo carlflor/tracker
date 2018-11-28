@@ -3,8 +3,6 @@ import { DropTarget } from 'react-dnd';
 import IssueListItem from './IssueListItem.jsx';
 import './IssueList.scss';
 
-
-
 const listTarget = {
   drop(props, monitor, component) {
   }
@@ -19,7 +17,7 @@ function collect(connect, monitor) {
 class IssueList extends Component {
   _renderIssues() {
     const issues = this.props.order.map( id => (
-      this.props.issues.find( issue => issue.id === id)
+      this.props.issues[String(id)]
     ))
 
     return issues.map((issue, index)  => (
@@ -29,19 +27,21 @@ class IssueList extends Component {
         title={issue.title}
         type={issue.type}
         description={issue.description}
-        state={issue.state}
+        status={issue.status}
         index={index}
       />
     ));
   }
 
   render() {
-    const { connectDropTarget, state } = this.props;
+    //const { connectDropTarget, status } = this.props;
+    const { status } = this.props;
 
-    return connectDropTarget(
+    //return connectDropTarget(
+    return (
       <div className="issue-list">
-        <div className={state}>
-          <h2>{`${state} Issues`}</h2>
+        <div className={status}>
+          <h2>{`${status} Issues`}</h2>
           {this._renderIssues()}
         </div>
       </div>
@@ -54,4 +54,5 @@ IssueList.defaultProps = {
   order: [],
 }
 
-export default DropTarget("ISSUE", listTarget, collect)(IssueList);
+//export default DropTarget("ISSUE", listTarget, collect)(IssueList);
+export default IssueList;
