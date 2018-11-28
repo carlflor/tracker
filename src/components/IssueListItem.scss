@@ -3,6 +3,10 @@
 .list-item {
   display: flex;
   margin-bottom: $content-spacing-sub;
+
+  &.dragging {
+    opacity: 0.35;
+  }
 }
 
 .list-item > .item {

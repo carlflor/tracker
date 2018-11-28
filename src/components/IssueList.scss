@@ -3,11 +3,11 @@
 .issue-list {
   padding: $content-spacing;
 
-  > .body {
-    margin-top: 50px;
+  h2:first-letter {
+    text-transform: capitalize;
+  }
 
-    &.-closed {
-      color: lighten($font-black, 30%);
-    }
+  > .closed {
+    color: lighten($font-black, 30%);
   }
 }

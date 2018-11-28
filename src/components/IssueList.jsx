@@ -1,33 +1,48 @@
 import React, { Component } from 'react';
+import { DropTarget } from 'react-dnd';
+import IssueListItem from './IssueListItem.jsx';
 import './IssueList.scss';
 
-import IssueListItem from './IssueListItem.jsx';
+
+
+const listTarget = {
+  drop(props, monitor, component) {
+  }
+}
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget()
+  };
+}
 
 class IssueList extends Component {
-  _renderIssues(isOpen) {
-    const openIssues = this.props.issues.filter( issue => issue.active === isOpen );
-    return openIssues.map(issue  => (
+  _renderIssues() {
+    const issues = this.props.order.map( id => (
+      this.props.issues.find( issue => issue.id === id)
+    ))
+
+    return issues.map((issue, index)  => (
       <IssueListItem
         key={issue.id}
         id={issue.id}
         title={issue.title}
         type={issue.type}
         description={issue.description}
-        active={issue.active}
+        state={issue.state}
+        index={index}
       />
     ));
   }
 
   render() {
-    return (
+    const { connectDropTarget, state } = this.props;
+
+    return connectDropTarget(
       <div className="issue-list">
-        <div className="body">
-          <h2>Open Issues</h2>
-          {this._renderIssues(true)}
-        </div>
-        <div className="body -closed">
-          <h2>Closed Issues</h2>
-          {this._renderIssues(false)}
+        <div className={state}>
+          <h2>{`${state} Issues`}</h2>
+          {this._renderIssues()}
         </div>
       </div>
     )
@@ -35,7 +50,8 @@ class IssueList extends Component {
 }
 
 IssueList.defaultProps = {
-  issues: []
+  issues: [],
+  order: [],
 }
 
-export default IssueList;
+export default DropTarget("ISSUE", listTarget, collect)(IssueList);
