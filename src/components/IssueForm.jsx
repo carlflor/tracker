@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { isNaN, get } from 'lodash';
 import './IssueForm.scss';
 
+const initialState = {
+  title: '',
+  type: 'Bug',
+  description: '',
+};
+
 class IssueForm extends Component {
+
   constructor(props) {
     super(props);
 
     const issue = this.getIssue(props.issues, this.getId(props));
-
     this.state = {
-      title: '',
-      type: 'Bug',
-      description: '',
+      ...initialState,
       ...issue,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -25,10 +32,11 @@ class IssueForm extends Component {
   }
 
   getId(props) {
-    return Number(props.match.params.id);
+    return Number(get(props, 'match.params.id'));
   }
 
   getIssue(issues, id) {
+    if (isNaN(id)) return null;
     return issues[String(id)];
   }
 
@@ -52,6 +60,13 @@ class IssueForm extends Component {
     } else {
       this.props.editIssue(issue);
     }
+  }
+
+  handleCancel(event) {
+    event.preventDefault();
+    this.setState({ ...initialState }, () => {
+      this.props.history.push('/');
+    });
   }
 
   _renderIssueTypeOptions() {
@@ -79,7 +94,10 @@ class IssueForm extends Component {
           Description
           <textarea  name="description" value={this.state.description} {...onChange}/>
         </label>
-        <input type="submit" name="submit" />
+        <input type="submit" name="submit" className="submit"/>
+        {!isNaN(this.getId(this.props)) &&
+          <button onClick={this.handleCancel}>Cancel</button>
+        }
       </form>
     );
   }
@@ -87,6 +105,13 @@ class IssueForm extends Component {
 
 IssueForm.defaultProps = {
   types: ['Bug', 'Improvement', 'Question'],
+  editIssue: () => {},
+  addIssue: () => {},
 };
+
+IssueForm.propTypes = {
+  editIssue: PropTypes.func.isRequired,
+  addIssue: PropTypes.func.isRequired,
+}
 
 export default IssueForm;

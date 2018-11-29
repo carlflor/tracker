@@ -61,4 +61,9 @@ class BarChart extends React.Component {
   }
 }
 
+BarChart.initialProps = {
+  data: [],
+  types: [],
+};
+
 export default BarChart;

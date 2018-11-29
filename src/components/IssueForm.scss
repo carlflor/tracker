@@ -10,13 +10,40 @@
 
   }
 
-  input, select, textarea {
-    padding: 5px;
+  input, select, textarea, button {
+    padding: 10px;
     margin-top: 5px;
     width: 100%;
     display: block;
     box-sizing: border-box;
+    border-radius: 5px;
+    border: none;
+    resize: none;
+    font-size: .8em;
   }
+
+  textarea {
+    min-height: 70px;
+  }
+
+  select {
+    height: 33px;
+  }
+
+  button {
+    background: gray;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-top: 10px;
+  }
+
+  .submit {
+    background: #289245;
+    color: white;
+    font-weight: bold;
+  }
+
 }
 
 

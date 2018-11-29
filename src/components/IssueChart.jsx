@@ -13,8 +13,8 @@ class IssueChart extends React.Component {
 
     return {
       data: Object.values(groups).map(group => group.length),
-      types: Object.keys(groups)
-    }
+      types: Object.keys(groups),
+    };
   }
 
   render() {
@@ -34,5 +34,9 @@ class IssueChart extends React.Component {
   }
 }
 
+IssueChart.defaultProps = {
+  open: [],
+  issues: [],
+};
 
 export default IssueChart;

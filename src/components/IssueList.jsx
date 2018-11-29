@@ -5,7 +5,7 @@ import './IssueList.scss';
 
 const listTarget = {
   hover(props, monitor, component) {
-    const { status, order } = props
+    const { status, order } = props;
 
     if ((status !== monitor.getItem().status) &&
        (order.length === 0)) {
