@@ -1,18 +1,10 @@
 import React, { Component, createContext } from 'react';
 
 const initialState = {
-  idCounter: 7,
-  open: [1,3,6,7],
-  closed: [2,4,5],
-  issues: {
-    '1': {id: 1,  title: 'test', type: 'Bug', description: 'test', status: 'open'},
-    '2': {id: 2, title: 'test', type: 'Improvement', description: 'test', status: 'closed'},
-    '3': {id: 3, title: 'test', type: 'Question', description: 'test', status: 'open'},
-    '4': {id: 4, title: 'test', type: 'Question', description: 'test', status: 'closed'},
-    '5': {id: 5, title: 'test', type: 'Bug', description: 'test', status: 'closed'},
-    '6': {id: 6, title: 'test', type: 'Improvement', description: 'test', status: 'open'},
-    '7': {id: 7, title: 'test', type: 'Bug', description: 'test', status: 'open'},
-  },
+  idCounter: 0,
+  open: [],
+  closed: [],
+  issues: {},
 };
 
 const { Provider, Consumer } = createContext();
@@ -27,6 +19,45 @@ export class AppProvider extends Component {
     this.addIssue = this.addIssue.bind(this);
     this.editIssue = this.editIssue.bind(this);
     this.moveIssue = this.moveIssue.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadStateFromLocalStorage();
+
+    window.addEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener(
+      "beforeunload",
+      this.saveStateToLocalStorage.bind(this)
+    );
+
+    this.saveStateToLocalStorage();
+  }
+
+  loadStateFromLocalStorage() {
+    for (let key in this.state) {
+      if (localStorage.hasOwnProperty(key)) {
+        let value = localStorage.getItem(key);
+
+        try {
+          value = JSON.parse(value);
+          this.setState({ [key]: value });
+        } catch (e) {
+          this.setState({ [key]: value });
+        }
+      }
+    }
+  }
+
+  saveStateToLocalStorage() {
+    for (let key in this.state) {
+      localStorage.setItem(key, JSON.stringify(this.state[key]));
+    }
   }
 
   addIssue(data) {
