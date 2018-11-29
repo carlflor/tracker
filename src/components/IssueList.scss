@@ -3,6 +3,10 @@
 .issue-list {
   padding: $content-spacing;
 
+  h2 {
+    margin-top: 0;
+  }
+
   h2:first-letter {
     text-transform: capitalize;
   }

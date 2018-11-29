@@ -85,16 +85,19 @@ class IssueListItem extends PureComponent {
       connectDropTarget(
         <div className={classnames('list-item', {dragging: isDragging})}>
           <div className="item">
-            <div className="info">
-              <span className="id">{this.props.id}</span>
-              <span className="title">{this.props.title}</span>
+            <div className="head">
+              <div className="info">
+                <span className="id">{this.props.id}</span>
+                <span className="title">{this.props.title}</span>
+              </div>
+              <div className="actions">
+                <span className={typeClass}>{this.props.type}</span>
+                <Link className="edit" to={`/issues/${this.props.id}/edit`}>
+                  <Ionicon icon="md-create" />
+                </Link>
+              </div>
             </div>
-            <div className="actions">
-              <span className={typeClass}>{this.props.type}</span>
-              <Link className="edit" to={`/issues/${this.props.id}/edit`}>
-                <Ionicon icon="md-create" />
-              </Link>
-            </div>
+            <div className="description">{this.props.description}</div>
           </div>
         </div>
       )

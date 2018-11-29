@@ -82,7 +82,7 @@ class IssueForm extends Component {
       <form className="issue-form" onSubmit={this.handleSubmit}>
         <label className="field">
           Title
-          <input type="text" name="title" value={this.state.title} {...onChange}/>
+          <input type="text" name="title" value={this.state.title} required {...onChange}/>
         </label>
         <label className="field">
           Type
