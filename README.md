@@ -1,6 +1,8 @@
 # Tracker
 
-This is a tracker app built using react library.
+This is a tracker app built using react
+
+![screen](trackr-screen.png)
 
 ## Available Scripts
 
@@ -13,3 +15,8 @@ npm test
 ```
 
 *node version: 11.2.0*
+
+## Features:
+
+- Add and edit issues using the form
+- Reorder or close issues by dragging them
